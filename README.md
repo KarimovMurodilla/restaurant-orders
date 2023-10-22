@@ -4,12 +4,12 @@
 
 ## Запуск приложения
 
-* С помощью docker-compose 
+### С помощью docker-compose 
 ```
 docker-compose up --build
 ```
 
-* С помощью python
+### С помощью python
 1. Установка модулей
 ```
 pip install -r requirements.txt
