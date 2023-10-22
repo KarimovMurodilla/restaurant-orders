@@ -8,6 +8,7 @@
 ```
 docker-compose up --build
 ```
+> Откройте в: [0.0.0.0:9999](http://0.0.0.0:9999)
 
 ### С помощью python
 1. Установка модулей
@@ -26,9 +27,11 @@ alembic upgrade head
 ```
 python src/main.py
 ```
+> Откройте в: [localhost:8000](http://localhost:8000)
+
 
 ## Запуск тестов
-Для тестов использовал [pytest](https://pypi.org/project/pytest/)
+Для тестов использовал [Pytest](https://pypi.org/project/pytest/)
 1. Запуск тестов (в корневом каталоге)
 ```
 pytest -v tests/

@@ -34,6 +34,11 @@ class UsersService:
             users = await uow.users.find_all()
             return users
 
+    async def filter_users(self, uow: IUnitOfWork, **filters: dict):
+        async with uow:
+            users = await uow.users.find_all_by(**filters)
+            return users
+        
     async def edit_user(self, uow: IUnitOfWork, id: int, user: UserSchemaEdit):
         async with uow:
             user_dict = user.model_dump()

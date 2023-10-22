@@ -45,8 +45,15 @@ async def get_all_users(
     users = await UsersService().get_all_users(uow)
     return users
 
+@router.get("/filter")
+async def filter_users_by_name(
+    uow: UOWDep,
+    name: str
+):
+    users = await UsersService().filter_users(uow, name=name)
+    return users
 
-@router.patch("/edit/{id}")
+@router.patch("/edit")
 async def edit_user(
     id: int,
     user: UserSchemaEdit,
@@ -55,8 +62,7 @@ async def edit_user(
     await UsersService().edit_user(uow, id, user)
     return {"ok": True}
 
-
-@router.delete("/delete/{id}")
+@router.delete("/delete")
 async def delete_user(
     id: int,
     uow: UOWDep

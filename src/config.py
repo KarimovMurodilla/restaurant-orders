@@ -4,7 +4,7 @@ from environs import Env
 env = Env()
 env.read_env()
 
-BASE_DIR = Path(__file__).parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Status
 TESTING = env.bool("TESTING")
@@ -16,5 +16,3 @@ DATABASE_URL = f"sqlite+aiosqlite:///{BASE_DIR}/database.db"
 DATABASE_URL_TEST = f"sqlite+aiosqlite:///{BASE_DIR}/test.db"
 
 SECRET = env.str("SECRET")
-
-print(f"print:\n{DATABASE_URL}")

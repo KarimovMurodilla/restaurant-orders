@@ -32,8 +32,15 @@ async def test_get_all_users(ac: AsyncClient):
     assert response.status_code == 200
 
 
+async def test_find_users_by_name(ac: AsyncClient):
+    response = await ac.get("/users/filter?name=test")
+
+    assert len(response.json()) == 1
+    assert response.status_code == 200
+
+
 async def test_edit_user(ac: AsyncClient):
-    response1 = await ac.patch("/users/edit/1", json={
+    response1 = await ac.patch("/users/edit?id=1", json={
         "name": "new name",
         "email": "changed@gmail.com",
         "password": "pass_changed",
@@ -50,7 +57,7 @@ async def test_edit_user(ac: AsyncClient):
 
 
 async def test_delete_user(ac: AsyncClient):
-    response = await ac.delete("/users/delete/1")
+    response = await ac.delete("/users/delete?id=1")
     users = await ac.get("/users/id/1")
 
     assert users.json() is None
