@@ -8,7 +8,7 @@ services:
     container_name: restaurants_db
     command: -p 5434
     expose:
-      - 1221
+      - 5434
     env_file:
       - .env-non-dev
 
