@@ -12,7 +12,7 @@ router = APIRouter(
 )
 
 
-@router.post("")
+@router.post("/")
 async def add_employee(
     uow: UOWDep,
     employee: EmployeeSchema

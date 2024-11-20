@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, Union
 
 
 class MenuItemCreateRequest(BaseModel):
@@ -10,7 +10,7 @@ class MenuItemCreateRequest(BaseModel):
     restaurant_id: int
 
 class MenuItemResponse(BaseModel):
-    id: int
+    id: Union[int, str]
     name: str
     description: Optional[str]
     price: float

@@ -12,7 +12,7 @@ router = APIRouter(
 )
 
 
-@router.post("")
+@router.post("/")
 async def create_restaurant(
     uow: UOWDep,
     restaurant_request: RestaurantCreateRequest,

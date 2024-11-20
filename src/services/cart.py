@@ -1,13 +1,20 @@
 import aiohttp
-from typing import Optional, List
+from typing import List
 
 from utils.unitofwork import IUnitOfWork
 from schemas.cart import CartRequest, CartResponse
 from schemas.employee import EmployeeSchema
 from config import BOT_TOKEN
 
+from db.mongodb import MongoDBManager
+from utils.repository import MongoDBRepository
+
 
 class CartService:
+    def __init__(self):
+        self.mongodb = MongoDBManager.client["restaurants"]
+        self.cart = MongoDBRepository(self.mongodb["cart"])
+        
     async def send_message(token, chat_id, text): 
         url = f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage' 
         payload = { 'chat_id': chat_id, 'text': text }
@@ -27,6 +34,8 @@ class CartService:
         async with uow:
             item_id = await uow.cart.add_one(item_dict)
             await uow.commit()
+
+            await self.cart.add_one(item_dict)
             return item_id
 
     async def get_cart(self, uow: IUnitOfWork, user_id: int):
@@ -37,6 +46,7 @@ class CartService:
     async def remove_from_cart(self, uow: IUnitOfWork, id: int):
         async with uow:
             await uow.cart.delete_one(id=id)
+            await self.cart.delete_one(id=id)
             await uow.commit()
 
     async def send_order_to_employees(self, uow: IUnitOfWork, items: List[CartResponse]):

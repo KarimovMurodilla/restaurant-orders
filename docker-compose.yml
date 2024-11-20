@@ -1,6 +1,28 @@
 version: "3.7"
 
 services:
+  db:
+    image: postgres:12.15
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    container_name: restaurants_db
+    command: -p 1221
+    expose:
+      - 1221
+    env_file:
+      - .env-non-dev
+
+  mongo:
+    image: mongo
+    restart: always
+    container_name: mongo
+    ports:
+      - 27018:27017
+    env_file:
+      - .env-non-dev
+    volumes:
+      - ./db_data/:/data/db/
+
   app:
     build:
       context: .
@@ -10,3 +32,10 @@ services:
     command: ["/fastapi_app/docker/app.sh"]
     ports:
       - 9999:8000
+    depends_on:
+      - db
+      - mongo
+
+volumes:
+  postgres_data:
+  db_data:
