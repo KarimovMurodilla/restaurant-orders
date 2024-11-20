@@ -3,11 +3,19 @@ from typing import Type
 
 from db.db import async_session_maker
 from repositories.users import UsersRepository
+from repositories.restaurant import RestaurantRepository
+from repositories.menu_item import MenuItemRepository
+from repositories.cart import CartRepository
+from repositories.employee import EmployeeRepository
 
 
 # https://github1s.com/cosmicpython/code/tree/chapter_06_uow
 class IUnitOfWork(ABC):
     users: Type[UsersRepository]
+    restaurant: Type[RestaurantRepository]
+    menu_item: Type[MenuItemRepository]
+    cart: Type[CartRepository]
+    employee: Type[EmployeeRepository]
     
     @abstractmethod
     def __init__(self):
@@ -37,6 +45,10 @@ class UnitOfWork:
         self.session = UnitOfWork.session_factory()
 
         self.users = UsersRepository(self.session)
+        self.restaurant = RestaurantRepository(self.session)
+        self.menu_item = MenuItemRepository(self.session)
+        self.cart = CartRepository(self.session)
+        self.employee = EmployeeRepository(self.session)
 
     async def __aexit__(self, *args):
         await self.rollback()

@@ -6,11 +6,12 @@ env.read_env()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Actually I use postgresql in production, but in tz sayed sqlite3
-DATABASE_URL = f"sqlite+aiosqlite:///{BASE_DIR}/database.db"
-
-# Test
-DATABASE_URL_TEST = f"sqlite+aiosqlite:///{BASE_DIR}/test.db"
+DB_HOST = env.str("DB_HOST")
+DB_PORT = env.str("DB_PORT")
+DB_NAME = env.str("DB_NAME")
+DB_USER = env.str("DB_USER")
+DB_PASS = env.str("DB_PASS")
+DATABASE_URL = f"postgresql+asyncpg://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
 SECRET = env.str("SECRET")
+BOT_TOKEN = env.str("BOT_TOKEN")

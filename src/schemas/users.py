@@ -3,24 +3,19 @@ from typing import List, Optional
 
 from fastapi_users import schemas
 
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 
 
 class UserSchema(schemas.BaseUser[int]):
     id: int
     name: str
+    phone_number: str
     email: str
-    is_active: bool
-    is_superuser: bool
-    is_verified: bool
 
     class ConfigDict:
         from_attributes = True
 
-
 class UserSchemaAdd(schemas.BaseUserCreate):
     name: str
-
-
-class UserSchemaEdit(schemas.BaseUserUpdate):
-    name: str
+    phone_number: Optional[str] = None
+    email: EmailStr

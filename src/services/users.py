@@ -1,6 +1,6 @@
 from typing import Optional
 
-from schemas.users import UserSchemaAdd, UserSchemaEdit
+from schemas.users import UserSchemaAdd
 from utils.unitofwork import IUnitOfWork
 
 from fastapi_users.password import PasswordHelper, PasswordHelperProtocol
@@ -39,15 +39,15 @@ class UsersService:
             users = await uow.users.find_all_by(**filters)
             return users
         
-    async def edit_user(self, uow: IUnitOfWork, id: int, user: UserSchemaEdit):
-        async with uow:
-            user_dict = user.model_dump()
-            password = user_dict.pop("password")
-            user_dict["hashed_password"] = self.password_helper.hash(password)
-            await uow.users.edit_one(id=id, data=user_dict)
-            await uow.commit()
+    # async def edit_user(self, uow: IUnitOfWork, id: int, user: UserSchemaEdit):
+    #     async with uow:
+    #         user_dict = user.model_dump()
+    #         password = user_dict.pop("password")
+    #         user_dict["hashed_password"] = self.password_helper.hash(password)
+    #         await uow.users.edit_one(id=id, data=user_dict)
+    #         await uow.commit()
 
-    async def delete_user(self, uow: IUnitOfWork, id: int):
-        async with uow:
-            await uow.users.delete_one(id=id)
-            await uow.commit()
+    # async def delete_user(self, uow: IUnitOfWork, id: int):
+    #     async with uow:
+    #         await uow.users.delete_one(id=id)
+    #         await uow.commit()
