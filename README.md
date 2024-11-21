@@ -7,6 +7,7 @@ Restoran Buyurtma Berish Tizimi
 * MongoDB
 * Docker
 * SQLAlchemy
+* Alembic
 
 
 > Loyiha [UoW design pattern](https://en.wikipedia.org/wiki/Unit_of_work) asosida qurilgan
