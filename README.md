@@ -1,6 +1,15 @@
 # Loyiha haqida
-Restoran Buyurtma Berish Tizimi 
+Restoran Buyurtma Berish Tizimi
 
+#### Ishlatilgan framework va texnologiyalar:
+* FastAPI
+* PostgreSQL
+* MongoDB
+* Docker
+* SQLAlchemy
+
+
+> Loyiha [UoW design pattern](https://en.wikipedia.org/wiki/Unit_of_work) asosida qurilgan
 ## Sozlamalar
 
 ### .env ni sozlab olish

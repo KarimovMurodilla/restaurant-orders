@@ -18,8 +18,8 @@ class MongoDBManager:
 
         restaurants = db.restaurants
         await restaurants.create_indexes([
-            IndexModel([("name", ASCENDING)]),  # Индекс для поиска по названию ресторана
-            IndexModel([("location", ASCENDING)])  # Если используется местоположение ресторана
+            IndexModel([("name", ASCENDING)]),
+            IndexModel([("location", ASCENDING)])
         ])
 
         menu_items = db.menu_items
@@ -32,9 +32,9 @@ class MongoDBManager:
 
         carts = db.carts
         await carts.create_indexes([
-            IndexModel([("user_id", ASCENDING)]),  # Для поиска корзины пользователя
-            IndexModel([("restaurant_id", ASCENDING)]),  # Для поиска корзины по ресторану
-            IndexModel([("menu_item_id", ASCENDING)])  # Для работы с элементами меню в корзине
+            IndexModel([("user_id", ASCENDING)]),
+            IndexModel([("restaurant_id", ASCENDING)]),
+            IndexModel([("menu_item_id", ASCENDING)])
         ])
 
         return cls.client
