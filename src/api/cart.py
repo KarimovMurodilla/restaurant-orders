@@ -44,8 +44,12 @@ async def make_order(
     if not items:
         return {"message": "Savatingizda hech narsa yo'q("}
     
-    await CartService().send_order_to_employees(uow, items)
-    return {"message": "Buyurtmangiz jo'natildi"}
+    result = await CartService().send_order_to_employees(uow, items)
+
+    if result:
+        return {"message": "Buyurtmangiz jo'natildi"}
+    else:
+        return {"message": "Restoran hodimlari topilmadi"}
 
 @router.get("")
 async def get_cart(

@@ -12,13 +12,14 @@ class RestaurantService:
     async def create_restaurant(self, uow: IUnitOfWork, data: RestaurantCreateRequest):
         data_dict = data.model_dump()
         async with uow:
-            order_id = await uow.restaurant.add_one(data_dict)
+            restaurant_id = await uow.restaurant.add_one(data_dict)
+            data_dict['restaurant_id'] = restaurant_id
             await self.restaurants.add_one(data_dict)
             await uow.commit()
-            return order_id
+            return restaurant_id
 
     async def get_restaurant(self, uow: IUnitOfWork, id: int):
         async with uow:
-            # order = await uow.restaurant.find_one(id=id)
-            order = await self.restaurants.find_one(id=id)
-            return order
+            # restaurant = await uow.restaurant.find_one(id=id)
+            restaurant = await self.restaurants.find_one(restaurant_id=id)
+            return restaurant

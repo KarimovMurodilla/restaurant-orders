@@ -114,7 +114,11 @@ class MongoDBRepository(AbstractRepository):
         return result
 
     async def find_one(self, **filters: dict):
-        return await self.collection.find_one(filters)
+        result = await self.collection.find_one(filters)
+        if result:
+            item_id = result.pop('_id')
+            result['id'] = str(item_id)
+        return result
 
     async def delete_one(self, **filters: dict) -> int:
         result = await self.collection.delete_one(filters)
@@ -137,6 +141,5 @@ class MongoDBRepository(AbstractRepository):
         cursor = self.collection.find(filters)
         result = [doc for doc in await cursor.to_list(length=None)]
         for data in result:
-            id_obj = data.pop('_id')
-            data['id'] = str(id_obj)
+            data.pop('_id')
         return result

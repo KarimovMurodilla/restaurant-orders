@@ -67,6 +67,9 @@ class CartService:
             restaurant_id = items[0].restaurant.id
             employees: List[EmployeeSchema] = await uow.employee.find_all_by(restaurant_id=restaurant_id)
 
+            if not employees:
+                return False
+            
             for employee in employees:
                 await self.send_message(employee.telegram_id, text)
         
@@ -74,5 +77,7 @@ class CartService:
                 await uow.cart.delete_one(id=item.id)
 
             await uow.commit()
+
+        return True
 
         

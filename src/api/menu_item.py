@@ -1,4 +1,5 @@
 import io
+import ast
 import json
 from PIL import Image
 from pyzbar.pyzbar import decode
@@ -46,9 +47,10 @@ async def decode_qr_code(
     decoded_data = qr_data[0].data.decode("utf-8")
 
     try:
-        data = json.loads(decoded_data)
+        data = ast.literal_eval(decoded_data)
         restaurant_id = data['restaurant_id']
-    except json.decoder.JSONDecodeError:
+    except Exception as e:
+        print(e)
         raise HTTPException(status_code=400, detail="Noto'g'ri QR-kod.")
 
     response = await MenuService().get_menu_items_by_restaurant_id(

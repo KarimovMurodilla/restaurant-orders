@@ -16,6 +16,7 @@ class MenuService:
         item_dict = item.model_dump()
         async with uow:
             item_id = await uow.menu_item.add_one(item_dict) # PostgreSQL
+            item_dict['id'] = item_id
             await self.menu_items.add_one(item_dict) # MongoDB
             await uow.commit()
             return item_id
